@@ -1,5 +1,6 @@
 from django.shortcuts import render
-from django.http import HttpResponse
+from .models import Tarefa
 
-def home(request):
-    return render(request, 'tarefas/home.html')
+def lista_tarefas(request):
+    tarefas = Tarefa.objects.all()
+    return render(request, "tarefas/lista-tarefas.html", {"tarefas": tarefas})
