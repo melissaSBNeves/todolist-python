@@ -16,9 +16,13 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from tarefas.views import lista_tarefas
+from tarefas.views import TarefaListView,TarefaCreateView, TarefaUpdateView,TarefaDeleteView, TarefaComplete
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path("", lista_tarefas),
+    path("", TarefaListView.as_view(), name="tarefas-list"),
+    path("create", TarefaCreateView.as_view(),  name="tarefas-create"),
+    path("update/<int:pk>", TarefaUpdateView.as_view(), name="tarefa-update"),
+    path("delete/<int:pk>", TarefaDeleteView.as_view(), name="tarefa-delete"),
+     path("complete/<int:pk>", TarefaComplete.as_view(), name="tarefa-complete"),
 ]

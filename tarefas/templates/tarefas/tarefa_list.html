@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+
+{% block page_title %}
+  Lista de tarefas
+{% endblock page_title %}
+
+{% block content %}  
+    <div style="display: flex; justify-content: space-between; align-items: center;">
+      <h1>Lista de tarefas</h1> 
+      <a class="btn btn-outline-primary " href="{% url "tarefas-create" %}" role="button">Nova tarefa</a>
+    </div>
+
+    {% if tarefa_list %}
+      <table class="table table-striped">
+          <thead>
+          <tr>
+              <th scope="col">#</th>
+              <th scope="col">Título</th>
+              <th scope="col">Criado em</th>
+              <th scope="col">Data de entrega</th>
+              <th scope="col">Finalizado em </th>
+              <th scope="col">Ações</th>
+          </tr>
+          </thead>
+          <tbody>
+              {% for tarefa in tarefa_list%}
+                  <tr>
+                      <th scope="row">{{tarefa.pk}}</th>
+                      <td>{{tarefa.titulo}}</td>
+                      <td>{{tarefa.dt_criacao}}</td>
+                      <td>{{tarefa.dt_prevista}}</td>
+                      <td>{{tarefa.dt_conclusao | default:"-"}}</td>
+                      <td>
+                          <a class="btn btn-outline-success btn-sm" href="{% url 'tarefa-complete' pk=tarefa.pk %}"role="button">Concluir</a>
+                          <a class="btn btn-outline-danger btn-sm" href="{% url 'tarefa-delete' pk=tarefa.pk %}" role="button">Excluir</a>
+                          <a class="btn btn-outline-info btn-sm" href="{% url 'tarefa-update' pk=tarefa.pk %}" role="button">Editar</a>
+
+                      </td>
+                  </tr>
+              {% endfor %}
+          </tbody>
+      </table>
+
+    {% else %}
+      <h3>Não há tarefas cadastradas</h3>
+    {% endif %}
+{% endblock content %}
+
+      
+        
+       
