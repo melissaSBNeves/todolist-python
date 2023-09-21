@@ -1,9 +1,7 @@
-from datetime import date
 from .models import Tarefa
 from django.urls import reverse_lazy
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView, View
-from django.shortcuts import get_object_or_404
-from django.shortcuts import redirect
+from django.shortcuts import get_object_or_404, redirect
 
 # Por padrão a listview vai procurar nomeApp_list
 class TarefaListView(ListView):
@@ -24,10 +22,9 @@ class TarefaDeleteView(DeleteView):
    success_url = reverse_lazy("tarefas-list")
 
 
-class TarefaComplete(View):
-    def get(self, request, pk):
+class TarefaCompleteView(View):
+     def get(self, request, pk):
         tarefa = get_object_or_404(Tarefa, pk=pk)
-        Tarefa.dt_conclusao = date.today
-        tarefa.save()
-        return redirect('tarefas-list')
+        tarefa.mark_has_complete()
+        return redirect("tarefas-list")
 
